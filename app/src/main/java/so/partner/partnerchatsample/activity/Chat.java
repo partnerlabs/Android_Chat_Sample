@@ -1,9 +1,11 @@
-package so.partner.partnerchatsample;
+package so.partner.partnerchatsample.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import so.partner.partnerchatsample.R;
 
 
 public class Chat extends AppCompatActivity {
