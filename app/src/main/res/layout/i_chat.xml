@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/i_chat_rl_other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/i_chat_tv_date_label"
+        android:paddingBottom="5dp" >
+
+        <ImageView
+            android:id="@+id/i_chat_iv_icon_other"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/i_chat_tv_user_id_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/i_chat_iv_icon_other"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@+id/i_chat_iv_icon_other"
+            android:text="이름"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/i_chat_ll_content_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/i_chat_tv_user_id_other"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@+id/i_chat_iv_icon_other"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/i_chat_tv_content_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/talk_message_other"
+                android:gravity="left|center_vertical"
+                android:maxWidth="150dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="4dp"
+                android:text="내용"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/i_chat_ll_label_other"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/i_chat_ll_content_other"
+            android:layout_toRightOf="@+id/i_chat_ll_content_other"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/i_chat_tv_time_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오전 12:34"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/i_chat_rl_me"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/i_chat_tv_date_label"
+        android:paddingBottom="5dp" >
+
+        <ImageView
+            android:id="@+id/i_chat_iv_icon_me"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/i_chat_tv_user_id_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/i_chat_iv_icon_me"
+            android:layout_marginRight="7dp"
+            android:layout_toLeftOf="@+id/i_chat_iv_icon_me"
+            android:text="이름"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/i_chat_ll_content_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/i_chat_tv_user_id_me"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="6dp"
+            android:layout_toLeftOf="@+id/i_chat_iv_icon_me"
+            android:orientation="vertical"
+            android:paddingLeft="4dp" >
+
+            <TextView
+                android:id="@+id/i_chat_tv_content_me"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/talk_message_me"
+                android:gravity="left|center_vertical"
+                android:maxWidth="150dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="12dp"
+                android:text="내용"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/i_chat_ll_label_me"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/i_chat_ll_content_me"
+            android:layout_toLeftOf="@+id/i_chat_ll_content_me"
+            android:gravity="right"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/i_chat_tv_time_me"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오전 12:34"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/i_chat_tv_date_label"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="2014월 6월 17일"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

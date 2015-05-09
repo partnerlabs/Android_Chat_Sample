@@ -17,7 +17,25 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.Chat" />
+        <activity android:name=".activity.Chat">
+            <intent-filter>
+                <action android:name="MESSAGE_ARRIVED" />
+                <category android:name="so.partner.partnerchatsample" />
+            </intent-filter>
+        </activity>
+
+        <!-- partner_android_library_mqtt의 Push를 처리하기 위한 Receiver -->
+        <receiver android:name="so.partner.partnerchatsample.MqttBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="so.partner.lib.android.mqtt.MQTT_EVENT" />
+
+                <category android:name="so.partner.example.chat" />
+            </intent-filter>
+        </receiver>
+
+        <!-- partner_android_library_mqtt의 Connection을 처리하는 Service -->
+        <service android:name="so.partner.lib.android.mqtt.MqttService" />
     </application>
 
 </manifest>
