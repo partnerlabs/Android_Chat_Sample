@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,12 +18,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import so.partner.lib.android.mqtt.MqttConnection;
 import so.partner.partnerchatsample.ChatManager;
-import so.partner.partnerchatsample.DBManager;
 import so.partner.partnerchatsample.MqttBroadcastReceiver;
 import so.partner.partnerchatsample.R;
 import so.partner.partnerchatsample.adapter.ChatAdapter;
-import so.partner.partnerchatsample.bean.TalkMessage;
+import so.partner.partnerchatsample.bean.ChatMessage;
 import so.partner.partnerchatsample.callback.IChatAdapterCallback;
 
 
@@ -32,17 +33,16 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
     private EditText mEtMessage;
 
     private ChatAdapter mChatAdapter;
-    private List<TalkMessage> mTalkList = new ArrayList<>();
-
-    private DBManager mDBManager;
+    private List<ChatMessage> mTalkList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         IntentFilter filter = new IntentFilter(MqttBroadcastReceiver.ACTION_MESSAGE_ARRIVED);
+        filter.addAction(MqttConnection.ACTION_PUBLISH_SUCCESS);
         filter.addCategory(getPackageName());
-        registerReceiver(mReceiver, filter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
 
         setContentView(R.layout.a_chat);
 
@@ -51,17 +51,15 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
 
         mChatAdapter = new ChatAdapter(this, mTalkList, this);
 
-        mDBManager = new DBManager(this);
-
         mLvTalk.setAdapter(mChatAdapter);
 
-        findViewById(R.id.a_chat_iv_btn_send).setOnClickListener(this);
+        findViewById(R.id.a_chat_btn_send).setOnClickListener(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -113,7 +111,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.a_chat_iv_btn_send: {
+            case R.id.a_chat_btn_send: {
                 send();
                 break;
             }
@@ -122,14 +120,10 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
 
     @Override
     public void removeTalk(String id) {
-        mDBManager.removeTalkMessage(id);
-        //resumeTalk();
     }
 
     @Override
     public void removeWaittingTalk(int id) {
-        mDBManager.removeWaittingTalkMessage(id);
-        //resumeTalk();
     }
 
     @Override
@@ -138,16 +132,12 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
 
     private void send() {
         String message = mEtMessage.getText().toString();
-        final int waittingMessageId;
-        if ((waittingMessageId = mDBManager.addWaittingTalkMessage("", message)) != -1) {
-            mEtMessage.setText("");
-        } else {
-            onFailRequest("로컬DB 에러");
-        }
-    }
-
-    private void onFailRequest(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        ChatMessage item = new ChatMessage();
+        item.content = message;
+        mChatAdapter.add(item);
+        mChatAdapter.notifyDataSetChanged();
+        mEtMessage.setText("");
+        ChatManager.publish(message);
     }
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -157,6 +147,13 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
             String action = intent.getAction();
 
             if (MqttBroadcastReceiver.ACTION_MESSAGE_ARRIVED.equals(action)) {
+                ChatMessage chatMessage = (ChatMessage) intent.getSerializableExtra(MqttBroadcastReceiver.EXTRA_CHAT_MESSAGE);
+                mChatAdapter.add(chatMessage);
+                mChatAdapter.notifyDataSetChanged();
+            } else if(MqttConnection.ACTION_PUBLISH_FAIL.equals(action)) {
+                Toast.makeText(Chat.this, "전송 실패", Toast.LENGTH_LONG).show();
+            } else if(MqttConnection.ACTION_PUBLISH_SUCCESS.equals(action)) {
+                Toast.makeText(Chat.this, "전송 성공", Toast.LENGTH_LONG).show();
             }
         }
     };

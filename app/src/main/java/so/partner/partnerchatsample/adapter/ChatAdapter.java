@@ -16,7 +16,7 @@ import java.util.List;
 
 import so.partner.partnerchatsample.ChatManager;
 import so.partner.partnerchatsample.R;
-import so.partner.partnerchatsample.bean.TalkMessage;
+import so.partner.partnerchatsample.bean.ChatMessage;
 import so.partner.partnerchatsample.callback.IChatAdapterCallback;
 
 /**
@@ -24,17 +24,21 @@ import so.partner.partnerchatsample.callback.IChatAdapterCallback;
  */
 public class ChatAdapter extends BaseAdapter {
     private final Context mContext;
-    private final List<TalkMessage> mTalkList;
+    private final List<ChatMessage> mTalkList;
     private final LayoutInflater mInflater;
     private final IChatAdapterCallback mCallback;
     private final SimpleDateFormat mYearMonthDateFormat = new SimpleDateFormat("yyyy년 M월 d일");
     private final SimpleDateFormat mHourMinuteFormat = new SimpleDateFormat("a h:mm");
 
-    public ChatAdapter(Context context, List<TalkMessage> talkList, IChatAdapterCallback callback) {
+    public ChatAdapter(Context context, List<ChatMessage> talkList, IChatAdapterCallback callback) {
         mContext = context;
         mTalkList = talkList;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mCallback = callback;
+    }
+
+    public boolean add(ChatMessage item) {
+        return mTalkList.add(item);
     }
 
     @Override
@@ -43,7 +47,7 @@ public class ChatAdapter extends BaseAdapter {
     }
 
     @Override
-    public TalkMessage getItem(int position) {
+    public ChatMessage getItem(int position) {
         return mTalkList.get(position);
     }
 
@@ -65,7 +69,7 @@ public class ChatAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final TalkMessage item = getItem(position);
+        final ChatMessage item = getItem(position);
 
         if (null != item) {
             if (item.id != null) {

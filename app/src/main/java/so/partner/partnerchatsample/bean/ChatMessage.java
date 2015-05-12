@@ -1,6 +1,8 @@
 package so.partner.partnerchatsample.bean;
 
-public class TalkMessage {
+import java.io.Serializable;
+
+public class ChatMessage implements Serializable {
 
 	public String id;
 	public int waittingId;

@@ -1,6 +1,6 @@
 package so.partner.partnerchatsample.bean;
 
-public class PushedTalkMessage {
+public class PushedChatMessage {
 
 	public Text text;
 	public String date;

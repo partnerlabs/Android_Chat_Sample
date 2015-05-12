@@ -8,17 +8,20 @@ import so.partner.lib.android.mqtt.MqttManager;
  */
 public class ChatManager {
 
-    private static final String TAG = ChatManager.class.getSimpleName();
     public static final String CONNECTION_NAME = "hardcoding";
+
+    private static final String TAG = ChatManager.class.getSimpleName();
+
     private static final String MQTT_BROKER_URI = "tcp://partnerinserver.iptime.org:1888";
     private static final String API_KEY = "5pHwTuACxqPPx2PRzIoWR07t35c8anEh4r7TcZFb3P8cz";
     private static final String CLIENT_ID = "client";
+    private static final String ROOM_ID = "roomId";
     private static final int ALIVE_INTERVAL = 60;
 
     public static final String THIRD_PARTY_RESPONSE_CODE_SUCCEED = "SUCCEED";
 
     public static void login() {
-        MqttManager.connect(MyApplication.getInstance(), CONNECTION_NAME, MQTT_BROKER_URI, API_KEY, CLIENT_ID, null, ALIVE_INTERVAL);
+        MqttManager.connect(MyApplication.getInstance(), CONNECTION_NAME, MQTT_BROKER_URI, API_KEY, CLIENT_ID, new String[]{ROOM_ID}, ALIVE_INTERVAL);
     }
 
     public static void logout() {
@@ -31,5 +34,10 @@ public class ChatManager {
             return connection.getClientId();
         }
         return null;
+    }
+
+    public static void publish(String message) {
+        MqttConnection connection = MqttManager.getConnections(MyApplication.getInstance()).get(CONNECTION_NAME);
+        connection.publish(message);
     }
 }
