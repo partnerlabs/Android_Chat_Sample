@@ -1,5 +1,7 @@
 package so.partner.partnerchatsample;
 
+import android.widget.Toast;
+
 import so.partner.lib.android.mqtt.MqttConnection;
 import so.partner.lib.android.mqtt.MqttManager;
 
@@ -38,6 +40,8 @@ public class ChatManager {
 
     public static void publish(String message) {
         MqttConnection connection = MqttManager.getConnections(MyApplication.getInstance()).get(CONNECTION_NAME);
-        connection.publish(message);
+        if(connection != null) {
+            connection.publish(message);
+        }
     }
 }
