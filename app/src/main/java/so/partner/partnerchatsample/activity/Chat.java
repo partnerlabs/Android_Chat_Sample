@@ -40,7 +40,6 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
         super.onCreate(savedInstanceState);
 
         IntentFilter filter = new IntentFilter(MqttBroadcastReceiver.ACTION_MESSAGE_ARRIVED);
-        filter.addAction(MqttConnection.ACTION_PUBLISH_SUCCESS);
         filter.addCategory(getPackageName());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
 
@@ -133,6 +132,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
     private void send() {
         String message = mEtMessage.getText().toString();
         ChatMessage item = new ChatMessage();
+        item.id = ChatManager.CONNECTION_NAME;
+        item.userId = ChatManager.getClientId();
         item.content = message;
         mChatAdapter.add(item);
         mChatAdapter.notifyDataSetChanged();
@@ -144,17 +145,9 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (MqttBroadcastReceiver.ACTION_MESSAGE_ARRIVED.equals(action)) {
-                ChatMessage chatMessage = (ChatMessage) intent.getSerializableExtra(MqttBroadcastReceiver.EXTRA_CHAT_MESSAGE);
-                mChatAdapter.add(chatMessage);
-                mChatAdapter.notifyDataSetChanged();
-            } else if(MqttConnection.ACTION_PUBLISH_FAIL.equals(action)) {
-                Toast.makeText(Chat.this, "전송 실패", Toast.LENGTH_LONG).show();
-            } else if(MqttConnection.ACTION_PUBLISH_SUCCESS.equals(action)) {
-                Toast.makeText(Chat.this, "전송 성공", Toast.LENGTH_LONG).show();
-            }
+            ChatMessage chatMessage = (ChatMessage) intent.getSerializableExtra(MqttBroadcastReceiver.EXTRA_CHAT_MESSAGE);
+            mChatAdapter.add(chatMessage);
+            mChatAdapter.notifyDataSetChanged();
         }
     };
 }

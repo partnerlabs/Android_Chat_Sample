@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="so.partner.partnerchatsample" >
+    package="so.partner.partnerchatsample">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -14,10 +14,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.Init"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,15 +26,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.Chat">
+        <activity
+            android:name=".activity.Chat"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="MESSAGE_ARRIVED" />
                 <category android:name="so.partner.partnerchatsample" />
             </intent-filter>
         </activity>
 
-        <!-- partner_android_library_mqtt의 Push를 처리하기 위한 Receiver -->
-        <receiver android:name="so.partner.partnerchatsample.MqttBroadcastReceiver" >
+        <receiver android:name="so.partner.partnerchatsample.MqttBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="so.partner.lib.android.mqtt.MQTT_EVENT" />
@@ -42,7 +44,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- partner_android_library_mqtt의 Connection을 처리하는 Service -->
         <service android:name="so.partner.lib.android.mqtt.MqttService" />
     </application>
 

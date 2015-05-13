@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class ChatMessage implements Serializable {
 
 	public String id;
-	public int waittingId;
 	public String roomId;
 	public String userId;
 	public String content;
