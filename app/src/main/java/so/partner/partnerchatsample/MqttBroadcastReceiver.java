@@ -5,15 +5,17 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import so.partner.lib.android.mqtt.MqttReceiver;
 import so.partner.partnerchatsample.bean.ChatMessage;
+import so.partner.partnerchatsample.bean.PushedChatMessage;
 
 /**
  * Created by 120801RF3 on 2015-05-11.
  */
 public class MqttBroadcastReceiver extends MqttReceiver {
-    private static final String TAG = MqttBroadcastReceiver.class
-            .getSimpleName();
+    private static final String TAG = MqttBroadcastReceiver.class.getSimpleName();
 
     public static final String ACTION_MESSAGE_ARRIVED = "MESSAGE_ARRIVED";
     public static final String EXTRA_CHAT_MESSAGE = "chatMessage";
@@ -21,21 +23,22 @@ public class MqttBroadcastReceiver extends MqttReceiver {
     public static String preTag = null;
 
     @Override
-    protected void onMessage(Context context, String name, String sid, String topic,
-                             byte[] payload) {
-        if (ChatManager.CONNECTION_NAME.equals(name)) {
-            try {
-                ChatMessage chatMessage = new ChatMessage();
-                chatMessage.id = name;
-                chatMessage.userId = sid;
-                chatMessage.content = new String(payload);
+    protected void onMessage(Context context, String name, String topic, byte[] payload) {
+        PushedChatMessage message = new Gson().fromJson(new String(payload), PushedChatMessage.class);
 
-                Intent intent = new Intent(ACTION_MESSAGE_ARRIVED);
-                intent.addCategory(context.getPackageName());
-                intent.putExtra(EXTRA_CHAT_MESSAGE, chatMessage);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage(), e);
+        if (message != null) {
+            if (!ChatManager.getClientId().equals(message.sId)) {
+                if (ChatManager.CONNECTION_NAME.equals(name)) {
+                    ChatMessage chatMessage = new ChatMessage();
+                    chatMessage.userId = message.sId;
+                    chatMessage.content = message.text;
+                    chatMessage.date = message.date;
+
+                    Intent intent = new Intent(ACTION_MESSAGE_ARRIVED);
+                    intent.addCategory(context.getPackageName());
+                    intent.putExtra(EXTRA_CHAT_MESSAGE, chatMessage);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                }
             }
         }
     }

@@ -18,21 +18,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import so.partner.lib.android.mqtt.MqttConnection;
 import so.partner.partnerchatsample.ChatManager;
 import so.partner.partnerchatsample.MqttBroadcastReceiver;
 import so.partner.partnerchatsample.R;
 import so.partner.partnerchatsample.adapter.ChatAdapter;
 import so.partner.partnerchatsample.bean.ChatMessage;
-import so.partner.partnerchatsample.callback.IChatAdapterCallback;
 
 
-public class Chat extends AppCompatActivity implements View.OnClickListener, IChatAdapterCallback {
+public class Chat extends AppCompatActivity implements View.OnClickListener {
 
     private ListView mLvTalk;
     private EditText mEtMessage;
-
     private ChatAdapter mChatAdapter;
+
     private List<ChatMessage> mTalkList = new ArrayList<>();
 
     @Override
@@ -48,7 +46,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
         mLvTalk = (ListView) findViewById(R.id.a_chat_lv_talk);
         mEtMessage = (EditText) findViewById(R.id.a_chat_et_message);
 
-        mChatAdapter = new ChatAdapter(this, mTalkList, this);
+        mChatAdapter = new ChatAdapter(this, mTalkList);
 
         mLvTalk.setAdapter(mChatAdapter);
 
@@ -117,24 +115,13 @@ public class Chat extends AppCompatActivity implements View.OnClickListener, ICh
         }
     }
 
-    @Override
-    public void removeTalk(String id) {
-    }
-
-    @Override
-    public void removeWaittingTalk(int id) {
-    }
-
-    @Override
-    public void reSend(final int id, String message) {
-    }
-
     private void send() {
         String message = mEtMessage.getText().toString();
         ChatMessage item = new ChatMessage();
-        item.id = ChatManager.CONNECTION_NAME;
         item.userId = ChatManager.getClientId();
         item.content = message;
+        item.date = System.currentTimeMillis();
+
         mChatAdapter.add(item);
         mChatAdapter.notifyDataSetChanged();
         mEtMessage.setText("");

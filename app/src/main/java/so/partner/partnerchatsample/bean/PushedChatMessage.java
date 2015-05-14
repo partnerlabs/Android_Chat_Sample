@@ -1,14 +1,13 @@
 package so.partner.partnerchatsample.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 public class PushedChatMessage {
 
-	public Text text;
-	public String date;
-
-	public class Text {
-		public String talkId;
-		public String roomId;
-		public String who;
-		public String text;
-	}
+    @SerializedName("sId")
+    public String sId;
+    @SerializedName(("text"))
+    public String text;
+    @SerializedName("date")
+    public long date;
 }

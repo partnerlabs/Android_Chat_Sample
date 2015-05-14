@@ -1,8 +1,6 @@
 package so.partner.partnerchatsample.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import java.util.List;
 import so.partner.partnerchatsample.ChatManager;
 import so.partner.partnerchatsample.R;
 import so.partner.partnerchatsample.bean.ChatMessage;
-import so.partner.partnerchatsample.callback.IChatAdapterCallback;
 
 /**
  * Created by Administrator on 2015-05-09.
@@ -25,15 +22,13 @@ public class ChatAdapter extends BaseAdapter {
     private final Context mContext;
     private final List<ChatMessage> mTalkList;
     private final LayoutInflater mInflater;
-    private final IChatAdapterCallback mCallback;
     private final SimpleDateFormat mYearMonthDateFormat = new SimpleDateFormat("yyyy년 M월 d일");
     private final SimpleDateFormat mHourMinuteFormat = new SimpleDateFormat("a h:mm");
 
-    public ChatAdapter(Context context, List<ChatMessage> talkList, IChatAdapterCallback callback) {
+    public ChatAdapter(Context context, List<ChatMessage> talkList) {
         mContext = context;
         mTalkList = talkList;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mCallback = callback;
     }
 
     public boolean add(ChatMessage item) {
@@ -71,9 +66,9 @@ public class ChatAdapter extends BaseAdapter {
         final ChatMessage item = getItem(position);
 
         if (null != item) {
-            String date = mYearMonthDateFormat.format(item.sendTime);
+            String date = mYearMonthDateFormat.format(item.date);
             if (position == 0
-                    || !date.equals(mYearMonthDateFormat.format(mTalkList.get(position - 1).sendTime))) {
+                    || !date.equals(mYearMonthDateFormat.format(mTalkList.get(position - 1).date))) {
                 holder.tvDateLabel.setVisibility(View.VISIBLE);
                 holder.tvDateLabel.setText(date);
             } else {
@@ -86,31 +81,15 @@ public class ChatAdapter extends BaseAdapter {
 
                 holder.tv_user_id_me.setText(item.userId);
                 holder.tv_content_me.setText(item.content);
-                holder.tv_time_me.setText(mHourMinuteFormat.format(item.sendTime));
+                holder.tv_time_me.setText(mHourMinuteFormat.format(item.date));
             } else {
                 holder.rl_other.setVisibility(View.VISIBLE);
                 holder.rl_me.setVisibility(View.GONE);
 
                 holder.tv_user_id_other.setText(item.userId);
                 holder.tv_content_other.setText(item.content);
-                holder.tv_time_other.setText(mHourMinuteFormat.format(item.sendTime));
+                holder.tv_time_other.setText(mHourMinuteFormat.format(item.date));
             }
-            convertView.setOnLongClickListener(new View.OnLongClickListener() {
-
-                @Override
-                public boolean onLongClick(View v) {
-                    new AlertDialog.Builder(mContext)
-                            .setNegativeButton("삭제", new DialogInterface.OnClickListener() {
-
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    mCallback.removeTalk(item.id);
-                                }
-                            }).setPositiveButton("취소", null).create().show();
-                    return true;
-                }
-            });
         }
 
         return convertView;
