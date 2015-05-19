@@ -30,12 +30,12 @@
             android:name=".activity.Chat"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="MESSAGE_ARRIVED" />
+                <action android:name="so.partner.lib.android.mqtt.MqttReceiver.MESSAGE_ARRIVED" />
                 <category android:name="so.partner.partnerchatsample" />
             </intent-filter>
         </activity>
 
-        <receiver android:name="so.partner.partnerchatsample.MqttBroadcastReceiver">
+        <receiver android:name=".receiver.MqttBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="so.partner.lib.android.mqtt.MQTT_EVENT" />

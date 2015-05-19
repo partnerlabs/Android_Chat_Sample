@@ -6,12 +6,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import so.partner.partnerchatsample.ChatManager;
 import so.partner.partnerchatsample.R;
 
-/**
- * Created by 120801RF3 on 2015-05-06.
- */
 public class Init extends AppCompatActivity {
 
     @Override
@@ -19,17 +15,12 @@ public class Init extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_init);
 
-        new Handler().post(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ChatManager.login();
-                goToChat();
+                startActivity(new Intent(Init.this, Chat.class));
+                finish();
             }
-        });
-    }
-
-    private void goToChat() {
-        startActivity(new Intent(this, Chat.class));
-        finish();
+        }, 1000);
     }
 }

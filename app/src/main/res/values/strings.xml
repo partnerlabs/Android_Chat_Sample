@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Partner Chat Sample</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="send">전송</string>
+    <string name="send">Send</string>
 </resources>

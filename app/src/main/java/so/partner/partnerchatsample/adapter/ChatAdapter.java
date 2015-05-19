@@ -15,9 +15,6 @@ import so.partner.partnerchatsample.ChatManager;
 import so.partner.partnerchatsample.R;
 import so.partner.partnerchatsample.bean.ChatMessage;
 
-/**
- * Created by Administrator on 2015-05-09.
- */
 public class ChatAdapter extends BaseAdapter {
     private final Context mContext;
     private final List<ChatMessage> mTalkList;
