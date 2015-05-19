@@ -16,10 +16,10 @@ import java.util.List;
 
 import so.partner.lib.android.mqtt.MqttReceiver;
 import so.partner.partnerchatsample.ChatManager;
-import so.partner.partnerchatsample.receiver.MqttBroadcastReceiver;
 import so.partner.partnerchatsample.R;
 import so.partner.partnerchatsample.adapter.ChatAdapter;
 import so.partner.partnerchatsample.bean.ChatMessage;
+import so.partner.partnerchatsample.receiver.MqttBroadcastReceiver;
 
 public class Chat extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,7 +33,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        IntentFilter filter = new IntentFilter(MqttBroadcastReceiver.ACTION_MESSAGE_ARRIVED);
+        IntentFilter filter = new IntentFilter(MqttReceiver.ACTION_MESSAGE_ARRIVED);
         filter.addCategory(getPackageName());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
 
