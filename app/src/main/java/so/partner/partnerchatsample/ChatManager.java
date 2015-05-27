@@ -22,6 +22,7 @@ public class ChatManager {
 
     public static void connect() {
         MqttManager.connect(MyApplication.getInstance(), APP_ID, MQTT_BROKER_URI, API_KEY, CLIENT_ID, new String[]{TOPIC}, ALIVE_INTERVAL);
+        ;
     }
 
     public static void disconnect() {
