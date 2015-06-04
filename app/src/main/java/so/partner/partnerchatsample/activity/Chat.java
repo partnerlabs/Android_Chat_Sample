@@ -1,9 +1,11 @@
 package so.partner.partnerchatsample.activity;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,25 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final ActivityManager am = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        if (am != null) {
+            String topActivityName = "";
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+                //For above Kitkat version
+                List<ActivityManager.RunningAppProcessInfo> tasks = am
+                        .getRunningAppProcesses();
+                if (tasks.get(0).importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    topActivityName = tasks.get(0).processName;
+                    System.out.println("topActivityName1 : " + topActivityName);
+                }
+            } else {
+                topActivityName = am.getRunningTasks(1).get(0).topActivity
+                        .getClassName();
+                System.out.println("topActivityName2 : " + topActivityName);
+            }
+        }
 
         IntentFilter filter = new IntentFilter(MqttReceiver.ACTION_MESSAGE_ARRIVED);
         filter.addCategory(getPackageName());

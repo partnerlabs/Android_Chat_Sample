@@ -4,6 +4,9 @@ import android.content.Context;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+
 import java.util.UUID;
 
 import so.partner.lib.android.mqtt.MqttConnection;
@@ -13,9 +16,9 @@ public class ChatManager {
 
     private static final String TAG = ChatManager.class.getSimpleName();
 
-    public static final String APP_ID = "hardcoding";
+    public static final String APP_ID = "android_partner_chat_sample";
     private static final String MQTT_BROKER_URI = "tcp://partnerinserver.iptime.org:1888";
-    private static final String API_KEY = "5pHwTuACxqPPx2PRzIoWR07t35c8anEh4r7TcZFb3P8cz";
+    private static final String API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJweCI6IjIiLCJhaSI6ImFuZHJvaWRfcGFydG5lcl9jaGF0X3NhbXBsZSIsInBmIjoiMSIsImR0IjoxNDMyODA1ODA5MjcxfQ.M5QeC0gX5IbIPZn7-c_-x0SzUYiubNecbZhZcC9SBkc";
     private static final String CLIENT_ID = getDeviceId();
     private static final String TOPIC = "partner_chat_example";
     private static final int ALIVE_INTERVAL = 60;
@@ -37,7 +40,7 @@ public class ChatManager {
     }
 
     public static void publish(String message) {
-        MqttManager.publish(MyApplication.getInstance(), APP_ID, new String[]{TOPIC}, message);
+        MqttManager.publish(MyApplication.getInstance(), APP_ID, TOPIC, message);
     }
 
     private static String getDeviceId() {
