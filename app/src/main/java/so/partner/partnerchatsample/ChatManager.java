@@ -4,9 +4,6 @@ import android.content.Context;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-
 import java.util.UUID;
 
 import so.partner.lib.android.mqtt.MqttConnection;
@@ -25,6 +22,11 @@ public class ChatManager {
 
     public static void connect() {
         MqttManager.connect(MyApplication.getInstance(), APP_ID, MQTT_BROKER_URI, API_KEY, CLIENT_ID, new String[]{TOPIC}, ALIVE_INTERVAL);
+    }
+
+    public static void reconnect() {
+        disconnect();
+        connect();
     }
 
     public static void disconnect() {

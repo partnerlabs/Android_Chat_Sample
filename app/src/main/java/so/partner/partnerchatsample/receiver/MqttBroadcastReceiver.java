@@ -4,7 +4,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -16,7 +15,6 @@ import so.partner.lib.android.mqtt.MqttPayload;
 import so.partner.lib.android.mqtt.MqttReceiver;
 import so.partner.partnerchatsample.ChatManager;
 import so.partner.partnerchatsample.MyApplication;
-import so.partner.partnerchatsample.activity.Chat;
 import so.partner.partnerchatsample.bean.ChatMessage;
 
 public class MqttBroadcastReceiver extends MqttReceiver {
@@ -76,5 +74,6 @@ public class MqttBroadcastReceiver extends MqttReceiver {
 
     @Override
     protected void connectionLost(Context context, String name) {
+        ChatManager.reconnect();
     }
 }
