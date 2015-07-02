@@ -4,24 +4,25 @@ import android.content.Context;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.UUID;
 
-import so.partner.lib.android.mqtt.MqttConnection;
-import so.partner.lib.android.mqtt.MqttManager;
+import so.partner.lib.android.partnerpush.PartnerPushManager;
 
 public class ChatManager {
 
-    private static final String TAG = ChatManager.class.getSimpleName();
-
-    public static final String APP_ID = "android_partner_chat_sample";
-    private static final String MQTT_BROKER_URI = "tcp://partnerinserver.iptime.org:1888";
-    private static final String API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJweCI6IjIiLCJhaSI6ImFuZHJvaWRfcGFydG5lcl9jaGF0X3NhbXBsZSIsInBmIjoiMSIsImR0IjoxNDMyODA1ODA5MjcxfQ.M5QeC0gX5IbIPZn7-c_-x0SzUYiubNecbZhZcC9SBkc";
+    public static final String APP_ID = "788b7892fa7bb38dca1db1e56ab5a591";
+    private static final String API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9" +
+            ".eyJweCI6IjEwIiwicGYiOiIyIiwiZHQiOjE0MzUwMjMxODMzMDh9.fAYgmsEP4lHFhYPqXLH8_u22wAtxyXuiH_FLIN40BpY";
     private static final String CLIENT_ID = getDeviceId();
-    private static final String TOPIC = "partner_chat_example";
+    private static final String TOPIC = "PPChat";
     private static final int ALIVE_INTERVAL = 60;
 
     public static void connect() {
-        MqttManager.connect(MyApplication.getInstance(), APP_ID, MQTT_BROKER_URI, API_KEY, CLIENT_ID, new String[]{TOPIC}, ALIVE_INTERVAL);
+        PartnerPushManager.connect(MyApplication.getInstance(), APP_ID, API_KEY, CLIENT_ID, new
+                String[]{TOPIC}, ALIVE_INTERVAL);
     }
 
     public static void reconnect() {
@@ -30,19 +31,24 @@ public class ChatManager {
     }
 
     public static void disconnect() {
-        MqttManager.disconnect(MyApplication.getInstance(), APP_ID);
-    }
-
-    public static String getClientId() {
-        MqttConnection connection = MqttManager.getConnections(MyApplication.getInstance()).get(APP_ID);
-        if (connection != null) {
-            return connection.getClientId();
-        }
-        return "";
+        PartnerPushManager.disconnect(MyApplication.getInstance(), APP_ID);
     }
 
     public static void publish(String message) {
-        MqttManager.publish(MyApplication.getInstance(), APP_ID, TOPIC, message);
+        JSONObject json = new JSONObject();
+        try {
+            json.put("nickname", "안드로이드야");
+            json.put("text", message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            try {
+                json.put("nickname", "");
+                json.put("text", "");
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+        }
+        PartnerPushManager.sendMessage(MyApplication.getInstance(), APP_ID, TOPIC, json);
     }
 
     private static String getDeviceId() {

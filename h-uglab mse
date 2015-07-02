@@ -1,0 +1,118 @@
+[33mcommit 14352a157b01766c09a393d16c4ce0139d7fc085[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Thu Jun 4 15:29:46 2015 +0900
+
+    test
+
+[33mcommit 5e3da21c4711f38dcd8821f60b2283b04c069462[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 27 19:56:03 2015 +0900
+
+    exchange remote
+
+[33mcommit bf4df49b0f4948d80ee13503489978e6cb86d8a5[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 27 19:52:45 2015 +0900
+
+    exchange remote
+
+[33mcommit 7735ce8c372344e2d18972a5dd94176df95abde9[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 27 19:49:14 2015 +0900
+
+    exchange remote
+
+[33mcommit b8a0557554f7138c4e7fcdeb9de3c5de61b5932c[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 27 19:40:02 2015 +0900
+
+    add subscriptions topic handling
+    add class MqttPayload
+
+[33mcommit bbd1b278d9f35cd0b5aa84872752860c1fd2708c[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Tue May 19 19:53:59 2015 +0900
+
+    restrict send empty message
+
+[33mcommit 1ea5409310d03becb48aa6c9d3c6619a9d14e94a[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Tue May 19 17:35:08 2015 +0900
+
+    change package of receiver
+
+[33mcommit f74c7c1a44b73a46a9dd8b0f56ec872c4c6c92dd[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Tue May 19 17:34:15 2015 +0900
+
+    update partner push library (change used class when client try to publish)
+
+[33mcommit 499da9cbcb78b6c381749cd0ca999212b2c6e674[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Thu May 14 19:05:30 2015 +0900
+
+    update partner push library (add json format)
+    available for dividing me with others
+
+[33mcommit 04a78ed2ead60008eb4d033b47a01ea5a5e478da[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 13 20:13:25 2015 +0900
+
+    update partner push library
+
+[33mcommit 7261a4c33c41d157545b93fd5df4815a8835d24e[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Tue May 12 19:20:39 2015 +0900
+
+    receive push message not handling yet
+
+[33mcommit d6deb2770e1aed22af2a01466a9f8e8a9d72de38[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Tue May 12 18:49:45 2015 +0900
+
+    add publish on client side
+
+[33mcommit 9038f58f9ec6d3dc5986472ec370a3a2000f336f[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Mon May 11 19:41:42 2015 +0900
+
+    apply for connecting with partner mqtt library
+
+[33mcommit 6dae03e1ee560b3b083638e7cd9fc4fc090efa6d[m
+Author: Sung Tae Lim <sungtae.lim@partner.so>
+Date:   Sun May 10 00:34:25 2015 +0900
+
+    add dbmanager
+    add connecting to mqtt
+    add chat adapter
+    add disconnecting when back key pressed
+
+[33mcommit 71220099263f805eab693f8ef56d0724375d5898[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 6 19:54:49 2015 +0900
+
+    d
+
+[33mcommit 5efbd4793120de3380eb161666a823cc633b964b[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 6 19:45:24 2015 +0900
+
+    add init class
+
+[33mcommit 9387140f7ad41e4819a4325a4210eb1ed6aa83aa[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 6 19:37:18 2015 +0900
+
+    first push
+
+[33mcommit 45bf6ad03c884b9a6fc9b08ab4018655716bdbea[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 6 19:32:35 2015 +0900
+
+    first push
+
+[33mcommit 0328b6b3d0fce9d6886042fa71daa3b7ab3a8c91[m
+Author: lim sungtae <sungtae.lim@partner.so>
+Date:   Wed May 6 19:29:13 2015 +0900
+
+    first push

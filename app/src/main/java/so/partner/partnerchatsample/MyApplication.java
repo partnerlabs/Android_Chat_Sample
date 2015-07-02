@@ -3,7 +3,7 @@ package so.partner.partnerchatsample;
 import android.app.Application;
 import android.content.Intent;
 
-import so.partner.lib.android.mqtt.MqttService;
+import so.partner.lib.android.partnerpush.PartnerPushService;
 
 public class MyApplication extends Application {
 
@@ -22,7 +22,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        startService(new Intent(this, MqttService.class));
+        startService(new Intent(this, PartnerPushService.class));
         ChatManager.connect();
     }
 }

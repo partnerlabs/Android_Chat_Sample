@@ -1,5 +1,6 @@
 package so.partner.partnerchatsample.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,9 @@ public class ChatAdapter extends BaseAdapter {
     private final Context mContext;
     private final List<ChatMessage> mTalkList;
     private final LayoutInflater mInflater;
+    @SuppressLint("SimpleDateFormat")
     private final SimpleDateFormat mYearMonthDateFormat = new SimpleDateFormat("yyyy년 M월 d일");
+    @SuppressLint("SimpleDateFormat")
     private final SimpleDateFormat mHourMinuteFormat = new SimpleDateFormat("a h:mm");
 
     public ChatAdapter(Context context, List<ChatMessage> talkList) {
@@ -47,6 +50,7 @@ public class ChatAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
@@ -72,19 +76,19 @@ public class ChatAdapter extends BaseAdapter {
                 holder.tvDateLabel.setVisibility(View.GONE);
             }
 
-            if (ChatManager.getClientId().equals(item.userId)) {
+            if (item.isMine) {
                 holder.rl_other.setVisibility(View.GONE);
                 holder.rl_me.setVisibility(View.VISIBLE);
 
-                holder.tv_user_id_me.setText(item.userId);
-                holder.tv_content_me.setText(item.content);
+                holder.tv_user_id_me.setText(item.nickname);
+                holder.tv_content_me.setText(item.text);
                 holder.tv_time_me.setText(mHourMinuteFormat.format(item.date));
             } else {
                 holder.rl_other.setVisibility(View.VISIBLE);
                 holder.rl_me.setVisibility(View.GONE);
 
-                holder.tv_user_id_other.setText(item.userId);
-                holder.tv_content_other.setText(item.content);
+                holder.tv_user_id_other.setText(item.nickname);
+                holder.tv_content_other.setText(item.text);
                 holder.tv_time_other.setText(mHourMinuteFormat.format(item.date));
             }
         }

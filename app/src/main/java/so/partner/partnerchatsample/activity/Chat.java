@@ -16,12 +16,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import so.partner.lib.android.mqtt.MqttReceiver;
+import so.partner.lib.android.partnerpush.PartnerPushReceiver;
 import so.partner.partnerchatsample.ChatManager;
 import so.partner.partnerchatsample.R;
 import so.partner.partnerchatsample.adapter.ChatAdapter;
 import so.partner.partnerchatsample.bean.ChatMessage;
-import so.partner.partnerchatsample.receiver.MqttBroadcastReceiver;
+import so.partner.partnerchatsample.receiver.PartnerPushBroadcastReceiver;
 
 public class Chat extends AppCompatActivity implements View.OnClickListener {
 
@@ -54,7 +54,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
             }
         }
 
-        IntentFilter filter = new IntentFilter(MqttReceiver.ACTION_MESSAGE_ARRIVED);
+        IntentFilter filter = new IntentFilter(PartnerPushReceiver.ACTION_MESSAGE_ARRIVED);
         filter.addCategory(getPackageName());
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
 
@@ -100,8 +100,9 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
         ChatManager.publish(message);
 
         ChatMessage item = new ChatMessage();
-        item.userId = ChatManager.getClientId();
-        item.content = message;
+        item.isMine = true;
+        item.nickname = "";
+        item.text = message;
         item.date = System.currentTimeMillis();
 
         mChatAdapter.add(item);
@@ -115,8 +116,8 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
-            if (MqttReceiver.ACTION_MESSAGE_ARRIVED.equals(action)) {
-                ChatMessage item = (ChatMessage) intent.getSerializableExtra(MqttBroadcastReceiver.EXTRA_CHAT_MESSAGE);
+            if (PartnerPushReceiver.ACTION_MESSAGE_ARRIVED.equals(action)) {
+                ChatMessage item = (ChatMessage) intent.getSerializableExtra(PartnerPushBroadcastReceiver.EXTRA_CHAT_MESSAGE);
                 if (item != null) {
                     mChatAdapter.add(item);
                     mChatAdapter.notifyDataSetChanged();
