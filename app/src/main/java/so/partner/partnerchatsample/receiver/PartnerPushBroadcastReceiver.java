@@ -55,5 +55,6 @@ public class PartnerPushBroadcastReceiver extends PartnerPushReceiver {
 
     @Override
     protected void onPPConnected(Context context) {
+        Toast.makeText(context, "connected", Toast.LENGTH_LONG).show();
     }
 }
