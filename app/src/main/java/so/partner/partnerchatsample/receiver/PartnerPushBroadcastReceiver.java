@@ -3,7 +3,6 @@ package so.partner.partnerchatsample.receiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -25,13 +24,23 @@ public class PartnerPushBroadcastReceiver extends PartnerPushReceiver {
             return;
         }
         ChatMessage chatMessage = null;
-        if (message.getMsgType() != PPMessage.BINARY) {
+        int msgType = message.getMsgType();
+        if (msgType != PPMessage.BINARY) {
             JSONObject json = new JSONObject(message.getContent());
-            try {
-                chatMessage = new Gson().fromJson((String) json.get("text"), ChatMessage.class);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
+            if (msgType == PPMessage.TEXT) {
+                try {
+                    chatMessage = new ChatMessage();
+                    chatMessage.text = (String) json.get("text");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (msgType == PPMessage.JSON)
+                try {
+                    chatMessage = new Gson().fromJson((String) json.get("text"), ChatMessage.class);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
         } else {
             chatMessage = new Gson().fromJson(new String(message.getBinary()), ChatMessage
                     .class);
