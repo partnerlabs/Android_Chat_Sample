@@ -25,7 +25,6 @@ import so.partner.partnerchatsample.receiver.PartnerPushBroadcastReceiver;
 
 public class Chat extends AppCompatActivity implements View.OnClickListener {
 
-    private ListView mLvTalk;
     private EditText mEtMessage;
     private ChatAdapter mChatAdapter;
 
@@ -38,7 +37,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
         final ActivityManager am = (ActivityManager) getApplicationContext()
                 .getSystemService(Context.ACTIVITY_SERVICE);
         if (am != null) {
-            String topActivityName = "";
+            String topActivityName;
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                 //For above Kitkat version
                 List<ActivityManager.RunningAppProcessInfo> tasks = am
@@ -48,6 +47,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
                     System.out.println("topActivityName1 : " + topActivityName);
                 }
             } else {
+                //noinspection deprecation
                 topActivityName = am.getRunningTasks(1).get(0).topActivity
                         .getClassName();
                 System.out.println("topActivityName2 : " + topActivityName);
@@ -60,13 +60,16 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
 
         setContentView(R.layout.a_chat);
 
-        mLvTalk = (ListView) findViewById(R.id.a_chat_lv_talk);
+        ListView mLvTalk = (ListView) findViewById(R.id.a_chat_lv_talk);
         mEtMessage = (EditText) findViewById(R.id.a_chat_et_message);
 
         mChatAdapter = new ChatAdapter(this, mTalkList);
 
         mLvTalk.setAdapter(mChatAdapter);
 
+
+        findViewById(R.id.a_chat_tv_subscribe).setOnClickListener(this);
+        findViewById(R.id.a_chat_tv_unsubscribe).setOnClickListener(this);
         findViewById(R.id.a_chat_btn_send).setOnClickListener(this);
     }
 
@@ -85,6 +88,14 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.a_chat_tv_subscribe: {
+                ChatManager.subscribe();
+                break;
+            }
+            case R.id.a_chat_tv_unsubscribe: {
+                ChatManager.unsubscribe();
+                break;
+            }
             case R.id.a_chat_btn_send: {
                 send();
                 break;
@@ -94,7 +105,7 @@ public class Chat extends AppCompatActivity implements View.OnClickListener {
 
     private void send() {
         String message = mEtMessage.getText().toString();
-        if (message == null || message.length() == 0) {
+        if (message.length() == 0) {
             return;
         }
         ChatManager.publish(message);

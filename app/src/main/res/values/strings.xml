@@ -2,4 +2,6 @@
     <string name="app_name">Partner Chat Sample</string>
 
     <string name="send">Send</string>
+    <string name="subscribe">Subscribe PPChat Topic</string>
+    <string name="unsubscribe">Unsubscribe PPChat Topic</string>
 </resources>

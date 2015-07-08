@@ -4,11 +4,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/a_chat_tv_subscribe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/subscribe" />
+
+    <TextView
+        android:id="@+id/a_chat_tv_unsubscribe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/a_chat_tv_subscribe"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/unsubscribe" />
+
     <ListView
         android:id="@+id/a_chat_lv_talk"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/a_chat_rl_input"
+        android:layout_below="@+id/a_chat_tv_unsubscribe"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:cacheColorHint="@android:color/transparent"

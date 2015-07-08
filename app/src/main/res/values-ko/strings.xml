@@ -2,4 +2,6 @@
     <string name="app_name">Partner Chat Sample</string>
 
     <string name="send">전송</string>
+    <string name="subscribe">PPChat 토픽 구독</string>
+    <string name="unsubscribe">PPChat 토픽 구독 해제</string>
 </resources>

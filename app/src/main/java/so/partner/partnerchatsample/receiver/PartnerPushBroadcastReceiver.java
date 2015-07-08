@@ -25,7 +25,6 @@ public class PartnerPushBroadcastReceiver extends PartnerPushReceiver {
             return;
         }
         ChatMessage chatMessage = null;
-        Log.d("RECEIVE", "message.getMsgType() = " + message.getMsgType());
         if (message.getMsgType() != PPMessage.BINARY) {
             JSONObject json = new JSONObject(message.getContent());
             try {
